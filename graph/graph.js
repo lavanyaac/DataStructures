@@ -45,18 +45,21 @@ Graph.prototype.print = function(){
 };
 
 Graph.prototype.traverseBFS = function(vertex){
+	const results = []
+
 	if(this.vertices.indexOf(vertex) === -1){
-		return;
+		return results;
 	}
 	const queue = [];
 	const visited = [];
+	
 
 	queue.push(vertex);
 	visited[vertex] = true;
 
 	while(queue.length > 0){
 		const node = queue.shift();
-		console.log(node);
+		results.push(node);
 
 		for(let i = 0; i<this.edges[node].length; i++){
 			const edges = this.edges[node];
@@ -66,6 +69,7 @@ Graph.prototype.traverseBFS = function(vertex){
 			}
 		}
 	}
+	return results;
 };
 
 Graph.prototype.traverseDFS = function(vertex){
@@ -73,16 +77,18 @@ Graph.prototype.traverseDFS = function(vertex){
 		return;
 	}
 	const visited = [];
-	this._DFShelper(vertex, visited);
+	const results = [];
+	this._DFShelper(vertex, visited, results);
+	return results;
 };
 
-Graph.prototype._DFShelper = function(vertex, visited){
+Graph.prototype._DFShelper = function(vertex, visited, results){
 	visited[vertex] = true;
-	console.log(vertex);
+	results.push(vertex);
 
 	for(let i = 0; i<this.edges[vertex].length; i++){
 		if(!visited[this.edges[vertex][i]]){
-			this._DFShelper(this.edges[vertex][i], visited);
+			this._DFShelper(this.edges[vertex][i], visited, results);
 		}
 	}
 };
@@ -93,33 +99,36 @@ Graph.prototype.size = function() {
 Graph.prototype.relations = function() {
   return this.numberOfEdges;
 };
-var graph = new Graph();
-graph.addVertex(1);
-graph.addVertex(2);
-graph.addVertex(3);
-graph.addVertex(4);
-graph.addVertex(5);
-graph.addVertex(6);
-graph.addEdge(1, 2);
-graph.addEdge(1, 5);
-graph.addEdge(2, 3);
-graph.addEdge(2, 5);
-graph.addEdge(3, 4);
-graph.addEdge(4, 5);
-graph.addEdge(4, 6);
-graph.print();
 
-graph.traverseBFS(1);
+module.exports =  Graph;
 
-graph.print();
+// var graph = new Graph();
+// graph.addVertex(1);
+// graph.addVertex(2);
+// graph.addVertex(3);
+// graph.addVertex(4);
+// graph.addVertex(5);
+// graph.addVertex(6);
+// graph.addEdge(1, 2);
+// graph.addEdge(1, 5);
+// graph.addEdge(2, 3);
+// graph.addEdge(2, 5);
+// graph.addEdge(3, 4);
+// graph.addEdge(4, 5);
+// graph.addEdge(4, 6);
+// graph.print();
 
-graph.traverseDFS(1);
+// console.log(graph.traverseBFS(1));
 
-graph.removeEdge(1, 2);
-graph.print();
+// graph.print();
 
-graph.removeVertex(5);
-graph.print();
+// console.log(graph.traverseDFS(1));
+
+// graph.removeEdge(1, 2);
+// graph.print();
+
+// graph.removeVertex(5);
+// graph.print();
 
 
 
