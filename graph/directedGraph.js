@@ -22,19 +22,14 @@ DirectedGraph.prototype.removeVertex = function(vertex){
 
 DirectedGraph.prototype.addEdge = function(vertex1, vertex2){
 	this.edges[vertex1].push(vertex2);
-	// this.edges[vertex2].push(vertex1);
 	this.numberOfEdges++;
 };
 
 DirectedGraph.prototype.removeEdge = function(vertex1, vertex2){
 	const index1 = this.edges[vertex1]? this.edges[vertex1].indexOf(vertex2): -1;
-	const index2 = this.edges[vertex2]? this.edges[vertex2].indexOf(vertex1): -1;
 	if(index1 !== -1){
 		this.edges[vertex1].splice(index1, 1);
 		this.numberOfEdges--;
-	}
-	if(index2 !== -1){
-		this.edges[vertex2].splice(index2, 1);
 	}
 };
 
