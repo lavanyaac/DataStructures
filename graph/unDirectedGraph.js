@@ -90,7 +90,7 @@ Graph.prototype._DFShelper = function(vertex, visited, results){
 		if(!visited[this.edges[vertex][i]]){
 			this._DFShelper(this.edges[vertex][i], visited, results);
 		}
-	}
+	}x2
 };
 
 Graph.prototype.size = function() {

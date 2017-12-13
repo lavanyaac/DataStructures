@@ -6,14 +6,14 @@ const Graph = require('../unDirectedGraph')
 
 const isCyclic = (graph) => {
 	const visited = [];
-	return dfsHelper2(graph, graph.vertices[0], visited);
+	return dfsHelper(graph, graph.vertices[0], visited);
 }
 
-function dfsHelper2(graph, vertex, visited, parent){
+function dfsHelper(graph, vertex, visited, parent){
 	visited[vertex] = true;
 	for(let i of graph.edges[vertex]){
 		if(!visited[i]){
-			if(dfsHelper2(graph, i, visited, vertex)){
+			if(dfsHelper(graph, i, visited, vertex)){
 				return true;
 			}
 		}else if(i !== parent){
