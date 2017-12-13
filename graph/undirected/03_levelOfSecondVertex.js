@@ -1,4 +1,4 @@
-const Graph = require('../graph')
+const Graph = require('../unDirectedGraph')
 
 //********************************************************************************
 // Find the length of shortest path(how many levels to find shortest path) between 

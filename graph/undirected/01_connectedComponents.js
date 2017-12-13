@@ -1,4 +1,4 @@
-const Graph = require('../graph')
+const Graph = require('../unDirectedGraph')
 
 //Modify graph DFS method to accept visited array along with vertex;
 Graph.prototype.traverseDFS = function(vertex, visited){
