@@ -72,6 +72,41 @@ Graph.prototype.traverseBFS = function(vertex){
 	return results;
 };
 
+Graph.prototype.traverseBFSWithLevel = function(vertex){
+	const results = []
+
+	if(this.vertices.indexOf(vertex) === -1){
+		return results;
+	}
+	const queue = [];
+	const visited = [];
+	
+
+	queue.push(vertex);
+	visited[vertex] = true;
+	counter = 0;
+
+	while(queue.length > 0){
+		var level = queue.length;
+		counter++;
+		while(level > 0 ){
+			const node = queue.shift();
+			results.push(node);
+			console.log(node, counter);
+
+			for(let i = 0; i<this.edges[node].length; i++){
+				const edges = this.edges[node];
+				if(!visited[edges[i]]){
+					visited[edges[i]] = true;
+					queue.push(edges[i]);
+				}
+			}
+			level--;
+		}
+	}
+	return results;
+};
+
 Graph.prototype.traverseDFS = function(vertex){
 	if(this.vertices.indexOf(vertex) === -1){
 		return;
@@ -118,7 +153,7 @@ module.exports =  Graph;
 // graph.addEdge(4, 6);
 // graph.print();
 
-// console.log(graph.traverseBFS(1));
+// console.log(graph.traverseBFSWithLevel(1));
 
 // graph.print();
 
