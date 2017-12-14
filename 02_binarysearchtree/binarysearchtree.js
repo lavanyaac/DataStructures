@@ -66,23 +66,23 @@ BinarySearchTree.prototype.postOrderTraveral = function(node = this.root, fn){
 
 module.exports = BinarySearchTree;
 
-var binarySearchTree = new BinarySearchTree();
-binarySearchTree.insert(5);
-binarySearchTree.insert(3);
-binarySearchTree.insert(7);
-binarySearchTree.insert(2);
-binarySearchTree.insert(4);
-binarySearchTree.insert(4);
-binarySearchTree.insert(6);
-binarySearchTree.insert(8);
+// var binarySearchTree = new BinarySearchTree();
+// binarySearchTree.insert(5);
+// binarySearchTree.insert(3);
+// binarySearchTree.insert(7);
+// binarySearchTree.insert(2);
+// binarySearchTree.insert(4);
+// binarySearchTree.insert(4);
+// binarySearchTree.insert(6);
+// binarySearchTree.insert(8);
 
-function print(node){
-	console.log(node.val);
-}
+// function print(node){
+// 	console.log(node.val);
+// }
 
 
-binarySearchTree.inOrderTraveral(binarySearchTree.root, print);
-console.log("----------");
-binarySearchTree.preOrderTraveral(binarySearchTree.root, print);
-console.log("----------");
-binarySearchTree.postOrderTraveral(binarySearchTree.root, print);
+// binarySearchTree.inOrderTraveral(binarySearchTree.root, print);
+// console.log("----------");
+// binarySearchTree.preOrderTraveral(binarySearchTree.root, print);
+// console.log("----------");
+// binarySearchTree.postOrderTraveral(binarySearchTree.root, print);
