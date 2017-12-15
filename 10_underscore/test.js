@@ -25,6 +25,20 @@ dup = [10, 10, 20, 30, 300, 40, 60];
 
 // console.log(_.uniq(dup));
 
-console.log(_.map(a, (item)=>{
-	return item*2;
-}))
+// console.log(_.map(a, (item)=>{
+// 	return item*2;
+// }))
+
+// console.log(_.reduce(a, function(memo, num){ 
+// 	return memo + num; 
+// }));
+
+// console.log(_.contains(a, 100));
+
+console.log(_.every(a, (item)=>{
+	return (item%10 === 0);
+}));
+
+console.log(_.some(a, (item)=>{
+	return (item%3 === 0);
+}));

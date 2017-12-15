@@ -1,4 +1,4 @@
-//***********Checklist***************
+//***********Underscore***************
 //_.identity
 //_.first
 //_.last
@@ -190,16 +190,54 @@ _.pluck = (collection, key) => {
 //          No accumulator is given so the first element is used.
 // _.reduce
 
+_.reduce = (collection, cb, accumulator) => {
+  _.each(collection, (item)=>{
+    if(accumulator === undefined){
+      accumulator = item;
+    }else{
+      accumulator = cb(accumulator, item);
+    }
+  });
+  return accumulator;
+};
+
 // Determine if the array or object contains a given value (using `===`).
   // _.contains
+_.contains = (collection, key) => {
+  return _.reduce(collection, (isFound, item)=>{
+    if(isFound){
+      return true;
+    }
+    return item === key;
+  }, false);
+};
 
 // Determine whether all of the elements match a truth test.
   // _.every
+_.every = (collection, cb) => {
+  cb = cb || _.identity;
+
+  return _.reduce(collection, (status, item) => {
+    if(!status){
+      return false;
+    }
+    return !!cb(item);
+  }, true);
+};
 
 // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   // _.some
+_.some = (collection, cb) => {
+  cb = cb || _.identity;
 
+  return _.reduce(collection, (status, item) => {
+    if(status){
+      return true;
+    }
+    return !!cb(item);
+  }, false)
+};
 /**
    * OBJECTS
    * =======
