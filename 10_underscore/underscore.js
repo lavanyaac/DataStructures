@@ -40,25 +40,6 @@ _.identity = (val) => {
   return val;
 }
 
-/**
-   * COLLECTIONS
-   * ===========
-   *
-   * In this section, we'll have a look at functions that operate on collections
-   * of values; in JavaScript, a 'collection' is something that can contain a
-   * number of values--either an array or an object.
-   *
-   *
-   * IMPORTANT NOTE!
-   * ===========
-   *
-   * The .first function is implemented for you, to help guide you toward success
-   * in your work on the following functions. Whenever you see a portion of the
-   * assignment pre-completed, be sure to read and understand it fully before
-   * you proceed. Skipping this step will lead to considerably more difficulty
-   * implementing the sections you are responsible for.
-   */
-
 // Return an array of the first n elements of an array. If n is undefined,
 // return just the first element.
 //_.first 
@@ -77,9 +58,6 @@ _.last = (array, n) => {
 
 // Call iterator(value, key, collection) for each element of collection.
 // Accepts both arrays and objects.
-//
-// Note: _.each does not have a return value, but rather simply runs the
-// iterator function over each item in the input collection.
 // _.each 
 _.each = (collection, cb) =>{
   if(typeof collection !== 'object'){
@@ -177,17 +155,6 @@ _.pluck = (collection, key) => {
 // the accumulator, and is never passed to the iterator. In other words, in
 // the case where a starting value is not passed, the iterator is not invoked
 // until the second element, with the first element as its second argument.
-//  
-// Example:
-//   var numbers = [1,2,3];
-//   var sum = _.reduce(numbers, function(total, number){
-//     return total + number;
-//   }, 0); // should be 6
-//  
-//   var identity = _.reduce([5], function(total, number){
-//     return total + number * number;
-//   }); // should be 5, regardless of the iterator function passed in
-//          No accumulator is given so the first element is used.
 // _.reduce
 
 _.reduce = (collection, cb, accumulator) => {
@@ -238,44 +205,47 @@ _.some = (collection, cb) => {
     return !!cb(item);
   }, false)
 };
-/**
-   * OBJECTS
-   * =======
-   *
-   * In this section, we'll look at a couple of helpers for merging objects.
-   */
 
-  // Extend a given object with all the properties of the passed in
-  // object(s).
-  //
-  // Example:
-  //   var obj1 = {key1: "something"};
-  //   _.extend(obj1, {
-  //     key2: "something new",
-  //     key3: "something else new"
-  //   }, {
-  //     bla: "even more stuff"
-  //   }); // obj1 now contains key1, key2, key3 and bla
-
- // _.extend
+// Extend a given object with all the properties of the passed in
+// object(s).
+// _.extend
+_.extend = (destination, ...sources) => {
+  _.each(sources, (obj) =>{
+    for(const key in obj){
+      destination[key] = obj[key];
+    }
+  });
+  return destination;
+}
 
 
 // Like extend, but doesn't ever overwrite a key that already
-  // exists in obj
-  // _.defaults
+// exists in obj
+// _.defaults
+_.defaults = (destination, ...sources) => {
+  _.each(sources, (obj) =>{
+    for(const key in obj){
+      if(!destination[key]){
+        destination[key] = obj[key];
+      }
+    }
+  });
+  return destination;
+}
 
-/**
-   * FUNCTIONS
-   * =========
-   *
-   * Now we're getting into function decorators, which take in any function
-   * and return out a new version of the function that works somewhat differently
-   */
+// Return a function that can be called at most one time. Subsequent calls
+// should return the previously returned value.
+// _.once
+_.once = (func) => {
+  let results;
 
-  // Return a function that can be called at most one time. Subsequent calls
-  // should return the previously returned value.
-  // _.once
-
+  return (...args)=>{
+    if(results === undefined){
+      results = func.apply(this, args);
+    }
+    return results;
+  };
+}
 // Memorize an expensive function's results by storing them. You may assume
   // that the function only takes primitives as arguments.
   // memoize could be renamed to oncePerUniqueArgumentList; memoize does the
@@ -286,13 +256,29 @@ _.some = (collection, cb) => {
   // instead if possible.
   // _.memoize
 
+_.memoize = function(func){
+  let results = {};
+
+  return(...args)=>{
+    const stringArgs = JSON.stringify(args);
+    if(results[stringArgs] === undefined){
+      results[stringArgs] = func.apply(this, args);
+    }
+    return results[stringArgs];
+  };
+}
+
 // Delays a function for the given number of milliseconds, and then calls
-  // it with the arguments supplied.
-  //
-  // The arguments for the original function are passed after the wait
-  // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
-  // call someFunction('a', 'b') after 500ms
-  // _.delay
+// it with the arguments supplied.
+//
+// The arguments for the original function are passed after the wait
+// parameter. For example _.delay(someFunction, 500, 'a', 'b') will
+// call someFunction('a', 'b') after 500ms
+// _.delay
+
+_.delay = (func, wait, ...args) => {
+  setTimeout(()=>{return func.apply(null, args)}, wait);
+}
 
 /**
    * ADVANCED COLLECTION OPERATIONS
