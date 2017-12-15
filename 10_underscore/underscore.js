@@ -280,37 +280,58 @@ _.delay = (func, wait, ...args) => {
   setTimeout(()=>{return func.apply(null, args)}, wait);
 }
 
-/**
-   * ADVANCED COLLECTION OPERATIONS
-   * ==============================
-   */
+// Randomizes the order of an array's contents.
+// _.shuffle  - Fisher-Yates method
+_.shuffle = (array) => {
+  const shuffled = array.slice();
+  for(let i = shuffled.length-1; i >= 0; i--){
+    const randomIndex = Math.floor(Math.random()*(i+1));
+    const valAtRandomIndex = shuffled[randomIndex];
 
-  // Randomizes the order of an array's contents.
-  //
-  // TIP: This function's test suite will ask that you not modify the original
-  // input array. For a tip on how to make a copy of an array, see:
-  // http://mdn.io/Array.prototype.slice
+    shuffled[randomIndex] = shuffled[i];
+    shuffled[i] = valAtRandomIndex;
+  }
+  return shuffled;
+}
 
-  // _.shuffle  
+// Calls the method named by functionOrKey on each value in the list.
+// Note: You will need to learn a bit about .apply to complete this.
+// _.invoke
+// _.invoke = (collection, functionOrKey, ...args) => {
+//   const results = [];
+//   if(Array.isArray(collection)){
 
-/**
-   * ADVANCED
-   * =================
-   *
-   * Note: This is the end of the pre-course curriculum. Feel free to continue,
-   * but nothing beyond here is required.
-   */
-
-  // Calls the method named by functionOrKey on each value in the list.
-  // Note: You will need to learn a bit about .apply to complete this.
-  // _.invoke
+//     for(const everyElement of collection){
+//       if(typeof functionOrKey !== 'function'){
+//         functionOrKey = everyElement[functionOrKey];
+//       }
+//       results.push(functionOrKey.apply(everyElement, args));
+//     }
+//   }else{
+//     for(const key in collection){
+//       results.push(collection[key][functionOrKey].apply(collection[key], args));
+//     }
+//   }
+//   return results;
+// };
+_.invoke = (collection, functionOrKey, ...args) => {
+  const isFunc = typeof functionOrKey === 'function';
+  return _.map(collection, (item)=>{
+    return (isFunc? functionOrKey: item[functionOrKey]).apply(item, args);
+  })
+}
 
 // Sort the object's values by a criterion produced by an iterator.
-  // If iterator is a string, sort objects by that property with the name
-  // of that string. For example, _.sortBy(people, 'name') should sort
-  // an array of people by their name.
-  // _.sortBy
-
+// If iterator is a string, sort objects by that property with the name
+// of that string. For example, _.sortBy(people, 'name') should sort
+// an array of people by their name.
+// _.sortBy
+_.sortBy = (collection, iterator) => {
+  const isString = typeof(iterator) === 'string';
+  return collection.sort((a, b) => {
+    return isString ? a[iterator] - b[iterator]: iterator(a) - iterator(b);
+  })
+}
 
 // Zip together two or more arrays with elements of the same index
   // going together.
