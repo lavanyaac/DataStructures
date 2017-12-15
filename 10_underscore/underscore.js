@@ -216,7 +216,7 @@ _.extend = (destination, ...sources) => {
     }
   });
   return destination;
-}
+};
 
 
 // Like extend, but doesn't ever overwrite a key that already
@@ -231,7 +231,7 @@ _.defaults = (destination, ...sources) => {
     }
   });
   return destination;
-}
+};
 
 // Return a function that can be called at most one time. Subsequent calls
 // should return the previously returned value.
@@ -245,7 +245,7 @@ _.once = (func) => {
     }
     return results;
   };
-}
+};
 // Memorize an expensive function's results by storing them. You may assume
   // that the function only takes primitives as arguments.
   // memoize could be renamed to oncePerUniqueArgumentList; memoize does the
@@ -266,7 +266,7 @@ _.memoize = function(func){
     }
     return results[stringArgs];
   };
-}
+};
 
 // Delays a function for the given number of milliseconds, and then calls
 // it with the arguments supplied.
@@ -278,7 +278,7 @@ _.memoize = function(func){
 
 _.delay = (func, wait, ...args) => {
   setTimeout(()=>{return func.apply(null, args)}, wait);
-}
+};
 
 // Randomizes the order of an array's contents.
 // _.shuffle  - Fisher-Yates method
@@ -292,7 +292,7 @@ _.shuffle = (array) => {
     shuffled[i] = valAtRandomIndex;
   }
   return shuffled;
-}
+};
 
 // Calls the method named by functionOrKey on each value in the list.
 // Note: You will need to learn a bit about .apply to complete this.
@@ -318,8 +318,8 @@ _.invoke = (collection, functionOrKey, ...args) => {
   const isFunc = typeof functionOrKey === 'function';
   return _.map(collection, (item)=>{
     return (isFunc? functionOrKey: item[functionOrKey]).apply(item, args);
-  })
-}
+  });
+};
 
 // Sort the object's values by a criterion produced by an iterator.
 // If iterator is a string, sort objects by that property with the name
@@ -330,39 +330,97 @@ _.sortBy = (collection, iterator) => {
   const isString = typeof(iterator) === 'string';
   return collection.sort((a, b) => {
     return isString ? a[iterator] - b[iterator]: iterator(a) - iterator(b);
-  })
-}
+  });
+};
 
 // Zip together two or more arrays with elements of the same index
-  // going together.
-  //
-  // Example:
-  // _.zip(['a','b','c','d'], [1,2,3]) returns [['a',1], ['b',2], ['c',3], ['d',undefined]]
-  // _.zip
+// going together.
+//
+// Example:
+// _.zip(['a','b','c','d'], [1,2,3]) returns [['a',1], ['b',2], ['c',3], ['d',undefined]]
+// _.zip
+_.zip = (...args) => {
+  const length = Math.max.apply(null, _.pluck(args, 'length').concat(0));
+  const results = new Array(length);
+  for(let i = 0; i<length; i++){
+    results[i] = _.pluck(args, ''+i);
+  }
+  return results;
+};
 
 // Takes a multidimensional array and converts it to a one-dimensional array.
-  // The new array should contain all elements of the multidimensional array.
-  //
-  // Hint: Use Array.isArray to check if something is an array
-  // _.flatten
-
+// The new array should contain all elements of the multidimensional array.
+// _.flatten
+_.flatten = (arr, flatArr=[]) => {
+  if(!Array.isArray(arr)){
+    return flatArr.push(arr);
+  }else{
+    for(const everyElement of arr){
+      _.flatten(everyElement, flatArr);
+    }
+  }
+  return flatArr;
+};
 
 // Takes an arbitrary number of arrays and produces an array that contains
-  // every item shared between all the passed-in arrays.
-  // _.intersection
+// every item shared between all the passed-in arrays.
+// _.intersection
+
+_.intersection = (...args) => {
+  const rest = args.slice(1);
+  const uniqArr = _.uniq(args[0]);
+
+  return _.filter(uniqArr, (item) => {
+    return _.every(rest, (everyArr) => {
+      return everyArr.includes(item);
+    });
+  });
+};
 
 
 // Take the difference between one array and a number of other arrays.
-  // Only the elements present in just the first array will remain.
-  // _.difference 
+// Only the elements present in just the first array will remain.
+// _.difference 
+_.difference = (...args) => {
+  const rest = args.slice(1);
+  const uniqArr = _.uniq(args[0]);
 
+  return _.reject(uniqArr, (item) => {
+    return _.some(rest, (everyArr) => {
+      return everyArr.includes(item);
+    });
+  });
+}
 
 // Returns a function, that, when invoked, will only be triggered at most once
-  // during a given window of time.  See the Underbar readme for extra details
-  // on this function.
-  //
-  // Note: This is difficult! It may take a while to implement.
-  // _.throttle
+// during a given window of time.  See the Underbar readme for extra details
+// on this function.
+//
+// _.throttle
+_.throttle = (func, windowOfTime) => {
+  let inThrottle;
+  let lastRan;
+  let lastFunc;
+  let counter = 0;
+  return (...args)=> {
+    if(!inThrottle){
+      console.log('again', counter++);
+      func.apply(this, args);
+      lastRan = Date.now();
+      inThrottle = true;
+    }else{
+      clearTimeout(lastFunc);
+      console.log('logged', lastRan);
+      lastFunc = setTimeout(function(){
+        if((Date.now() - lastRan) >= windowOfTime){
+          console.log('logged')
+          func.apply(this, args);
+          lastRan = Date.now();
+        }
+      }, limit-(Date.now() - lastRan))
+    }
+  }
+} 
 
 module.exports = _;
 

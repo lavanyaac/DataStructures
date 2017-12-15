@@ -94,23 +94,39 @@ dup = [10, 10, 20, 30, 300, 40, 60];
 // console.log(concatedresult);//[ 'lolbbq' ]
 
 //*************************************SortBy********************************
-let people = [{name : 'curly', age : 50}, {name : 'moe', age : 30}];
-people = _.sortBy(people, function(person) {
-  return person.age;
-});
-console.log(people);//[ { name: 'moe', age: 30 }, { name: 'curly', age: 50 } ]
+// let people = [{name : 'curly', age : 50}, {name : 'moe', age : 30}];
+// people = _.sortBy(people, function(person) {
+//   return person.age;
+// });
+// console.log(people);//[ { name: 'moe', age: 30 }, { name: 'curly', age: 50 } ]
 
-const list = [undefined, 4, 1, undefined, 3, 2];
-const result = _.sortBy(list, function(i) { return i; });
-console.log(result);//[ 1, 2, 3, 4, undefined, undefined ]
+// const list = [undefined, 4, 1, undefined, 3, 2];
+// const result = _.sortBy(list, function(i) { return i; });
+// console.log(result);//[ 1, 2, 3, 4, undefined, undefined ]
 
-const arr = ['one', 'two', 'three', 'four', 'five'];
-const sorted = _.sortBy(arr, 'length');
-console.log(sorted);//[ 'one', 'two', 'four', 'five', 'three' ]
+// const arr = ['one', 'two', 'three', 'four', 'five'];
+// const sorted = _.sortBy(arr, 'length');
+// console.log(sorted);//[ 'one', 'two', 'four', 'five', 'three' ]
 
-//*************************************Invoke********************************
-//*************************************Invoke********************************
-//*************************************Invoke********************************
-//*************************************Invoke********************************
-//*************************************Invoke********************************
+//*************************************Zip***********************************
+// const names = ['moe', 'larry', 'curly'], ages = [30, 40, 50], leaders = [true];
+// const zippedPerson = _.zip(names, ages, leaders);
+// console.log(zippedPerson);
+// // [ [ 'moe', 30, true ],
+// //   [ 'larry', 40, undefined ],
+// //   [ 'curly', 50, undefined ] ]
+//*************************************Flatten********************************
+// console.log(_.flatten([1, [2], [3, [[[4]]]]]));//[1,2,3,4];
+//*************************************Intersection********************************
+// console.log(_.intersection(['moe', 'curly', 'larry', 'larry', 'moe'], ['moe', 'groucho']));//['moe']
+//*************************************Difference********************************
+// console.log(_.difference([1, 2, 3, 4], [2, 30, 40], [1, 11, 111]));
+
+//*************************************Throttle********************************
+const someFunc = () => {
+	console.log('SomeFunc Executed');
+}
+
+const fn = _.throttle(someFunc, 2000);
+fn();
 
