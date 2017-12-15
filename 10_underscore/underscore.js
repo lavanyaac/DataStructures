@@ -83,7 +83,7 @@ _.last = (array, n) => {
 // _.each 
 _.each = (collection, cb) =>{
   if(typeof collection !== 'object'){
-    return;
+    return collection;
   }
   if(Array.isArray(collection)){
     for(let index = 0; index<collection.length; index++){
@@ -110,20 +110,63 @@ _.indexOf = (array, target) => {
 
 // Return all elements of an array that pass a truth test.
 // _.filter
+_.filter = (collection, test) => {
+  const results = [];
+
+  _.each(collection, (item) => {
+    if(test(item)){
+      results.push(item);
+    }
+  });
+  return results;
+};
 
 // Return all elements of an array that don't pass a truth test.
 // _.reject
+_.reject = (collection, test) => {
+  const results = [];
+
+  _.each(collection, (item) => {
+    if(!test(item)){
+      results.push(item);
+    }
+  });
+  return results;
+};
 
 // Produce a duplicate-free version of the array.
 // _.uniq
+_.uniq = (array) => {
+  const results = [];
+
+  for(const item of array){
+    if(!results.includes(item)){
+      results.push(item);
+    }
+  }
+  return results;
+};
 
 // Return the results of applying an iterator to each element.
 // _.map
+_.map = (collection, cb) => {
+  const results = [];
+
+  _.each(collection, (item, index, collection)=>{
+    results.push(cb(item, index, collection));
+  });
+  return results;
+};
 
 // Takes an array of objects and returns and array of the values of
 // a certain property in it. E.g. take an array of people and return
 // an array of just their ages
 // _.pluck
+_.pluck = (collection, key) => {
+  return _.map(collection, (item) => {
+    return item[key];
+  });
+}
 
 // Reduces an array or object to a single value by repetitively calling
 // iterator(accumulator, item) for each item. accumulator should be
