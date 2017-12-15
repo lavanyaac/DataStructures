@@ -401,26 +401,22 @@ _.throttle = (func, windowOfTime) => {
   let inThrottle;
   let lastRan;
   let lastFunc;
-  let counter = 0;
   return (...args)=> {
     if(!inThrottle){
-      console.log('again', counter++);
       func.apply(this, args);
       lastRan = Date.now();
       inThrottle = true;
     }else{
       clearTimeout(lastFunc);
-      console.log('logged', lastRan);
       lastFunc = setTimeout(function(){
         if((Date.now() - lastRan) >= windowOfTime){
-          console.log('logged')
           func.apply(this, args);
           lastRan = Date.now();
         }
-      }, limit-(Date.now() - lastRan))
+      }, windowOfTime-(Date.now() - lastRan))
     }
   }
-} 
+};
 
 module.exports = _;
 

@@ -127,6 +127,7 @@ const someFunc = () => {
 	console.log('SomeFunc Executed');
 }
 
-const fn = _.throttle(someFunc, 2000);
+const fn = _.throttle(someFunc, 5000);
 fn();
-
+fn();
+fn();
