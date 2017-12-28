@@ -17,20 +17,20 @@ const allAnagrams = function(string) {
   const endIndex = inp.length-1;
   const startIndex = 0;
   const permutations = [];
-  permute(inp, startIndex, endIndex);
+  permute(inp, 0);
   return permutations;
 
-  function permute(inp, index, endIndex){
-  	if(index === endIndex+1){
+  function permute(inp, pos){
+  	if(pos === inp.length){
   		permutations.push(inp.join(''));
   	}else{
-	  	for(let i = index; i<=endIndex; i++){
-	  		[inp[i], inp[endIndex]] =  [inp[endIndex], inp[i]];
-	  		permute(inp, index+1, endIndex);
-	  		[inp[i], inp[endIndex]] =  [inp[endIndex], inp[i]];//backtrack
+	  	for(let i = pos; i<inp.length; i++){
+	  		[inp[pos], inp[i]] =  [inp[i], inp[pos]];
+	  		permute(inp, pos+1);
+	  		[inp[pos], inp[i]] =  [inp[i], inp[pos]];//backtrack
 	  	}
 	  }
   }
 };
 
-console.log(allAnagrams('abc'));//[ 'cab', 'cba', 'abc', 'acb', 'acb', 'abc' ]
+console.log(allAnagrams('abc'));//[ 'abc', 'acb', 'bac', 'bca', 'cba', 'cab' ]
