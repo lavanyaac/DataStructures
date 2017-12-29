@@ -15,5 +15,6 @@ const myPow = function(x, n) {
 		n = -n;
 		x = 1/x;
 	}
-	return (n%2 === 0)? (myPow(x*x, n/2)): x *(myPow(x*x, n/2));
+	return (n%2 === 0)? (myPow(x*x, Math.floor(n/2))): x * (myPow(x*x, Math.floor(n/2)));
 }
+console.log(myPow(4, 4));
