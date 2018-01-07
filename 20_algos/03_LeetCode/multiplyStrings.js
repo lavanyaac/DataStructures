@@ -28,8 +28,16 @@ const multiply = function(num1, num2) {
 			product[p1] += Math.floor(sum/10);
 		}
 	}
-	return product.join('');
+	let res = product.join('');
+	while(res){
+		if(res[0] === '0' && res.length > 1){
+			res = res.slice(1);
+		}else{
+			break;
+		}
+	}
+	return res;
 };
 
-console.log(multiply('232', '567'));//131544
+console.log(multiply('000', '0'));//131544
 
