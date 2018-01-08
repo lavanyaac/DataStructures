@@ -1,8 +1,6 @@
 // Given an array of integers, output an array that contains the number of prime factor for each integer. 
 //My solution gets too slow, but maybe it's just python is too slow for this problem.  
 
-const memo = {};
-
 const primeFactors = function(num){
 	const factors = [];
 
