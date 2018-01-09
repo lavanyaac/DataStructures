@@ -16,9 +16,9 @@ const maxProduct = function(nums) {
 		if(nums[i] < 0){
 			[imax, imin] = [imin, imax];
 		}
-			imax = Math.max(nums[i], imax*nums[i]);
-			imin = Math.max(nums[i], imin*nums[i]);
-			max = Math.max(imax, max);
+	imax = Math.max(nums[i], imax*nums[i]);
+	imin = Math.max(nums[i], imin*nums[i]);
+	max = Math.max(imax, max);
 	}
 	return max;
 }
