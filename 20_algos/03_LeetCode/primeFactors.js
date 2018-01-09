@@ -4,12 +4,12 @@
 const primeFactors = function(num){
 	const factors = [];
 
-	while(num%2 === 0){
-		num = num/2;
-		factors.push(2);
-	}
+	// while(num%2 === 0){
+	// 	num = num/2;
+	// 	factors.push(2);
+	// }
 
-	for(let i = 3; i<Math.ceil(Math.sqrt(num)); i++){
+	for(let i = 2; i<Math.ceil(Math.sqrt(num)); i++){
 		while(num%i === 0){
 			num = num/i;
 			factors.push(i);
@@ -36,4 +36,4 @@ const primeFactorsArr = function(arr){
 
 // console.log(primeFactors(315));
 
-console.log(primeFactorsArr([1,3,4,5,10,12]))
+console.log(primeFactorsArr([1,3,4,5,10,12]))//[ 0, 1, 1, 1, 2, 3 ]
