@@ -71,12 +71,11 @@
 function BinaryHeap (compFunc) {
 	this._heap = [];
 	this._compare = compFunc || function(i, j){return i<j;}
- console.log(this._compare);
 	this._getSmallestChild = function(currIndex){
 		const childIndices = [(currIndex*2) + 1, (currIndex*2) + 2].filter((index)=>{
 			return index < this._heap.length;
 		});
-		if(this._compare(childIndices[0], childIndices[1])){
+		if(this._compare(this._heap[childIndices[0]], this._heap[childIndices[1]])){
 			return childIndices[0];
 		}else{
 			return childIndices[1];
@@ -121,17 +120,19 @@ BinaryHeap.prototype.removeRoot = function () {
 
 
 
-var BH = new BinaryHeap(function (i, j) { return i < j });
+var BH = new BinaryHeap(function (i, j) { return i > j });
 BH.insert(2);
 BH.insert(3);
 BH.insert(1);
 BH.insert(0);
-console.log(BH._heap);//its min heap [0,1,2,3]
+console.log(BH._heap);//its max heap [ 3, 2, 1, 0 ]
 
-console.log(BH._compare);
-console.log(BH.removeRoot());//0
-console.log(BH._heap);//[1,3,2]
+console.log(BH.removeRoot());//3
+console.log(BH._heap);//[[ 2, 0, 1 ]
 
+
+console.log(BH.removeRoot());//2
+console.log(BH._heap);//[[ 1, 0 ]
 
 
 
