@@ -41,6 +41,22 @@ const searchMatrix = function(matrix, target) {
 	return false;
 }
 
+const searchMatrix2 = function(matrix, target){
+	let row = 0;
+	let col = matrix[0].length-1;
+	while(col >= 0 && row < matrix.length){
+		if(matrix[row][col] === target){
+			return true;
+		}
+		if(matrix[row][col] > target){
+			--col;
+		}else{
+			++row;
+		}
+	}
+	return false;
+}
+
 const M =[
   [1,   3,  5,  7],
   [10, 11, 16, 20],
@@ -50,3 +66,8 @@ const M =[
 console.log(searchMatrix(M, 3));//true
 console.log(searchMatrix(M, 13));//false
 console.log(searchMatrix(M, 30));//true
+console.log("**************************")
+
+console.log(searchMatrix2(M, 3));//true
+console.log(searchMatrix2(M, 13));//false
+console.log(searchMatrix2(M, 1));//true
