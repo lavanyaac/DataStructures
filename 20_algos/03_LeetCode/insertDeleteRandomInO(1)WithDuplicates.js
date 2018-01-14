@@ -23,9 +23,10 @@ RandomizedCollection.prototype.insert = function(val) {
   const contains = !this.locs.hasOwnProperty(val);
   
   const idxs = this.locs[val] || [];
-  this.nums.push(val);
-  idxs.push(this.nums.length-1);
+  idxs.push(this.nums.length);
   this.locs[val] = idxs;
+
+  this.nums.push([val, idxs.length-1]);
 
   return contains;
 };
@@ -38,14 +39,21 @@ RandomizedCollection.prototype.insert = function(val) {
 RandomizedCollection.prototype.remove = function(val) {
   const contains = this.locs.hasOwnProperty(val);
   if(contains){
-  	const idx = this.locs[val].pop();
-  	if(!this.locs[val].length){
-  		delete this.locs[val];
-  	}
-  	const lastone = this.nums.pop();
-  	this.locs[lastone].pop();
-  	this.locs[lastone].push(idx);
-  	this.nums[idx] = lastone;
+    const valList = this.locs[val];
+    const valLastIdx = valList[valList.length - 1];
+
+    const swapNum = this.nums[this.nums.length-1];
+    const [swapVal, swapidx] = swapNum;
+    
+    this.locs[swapVal][swapidx] = valLastIdx;
+    this.nums[valLastIdx] = swapNum;
+
+    if(valList.length === 1){
+      delete this.locs[val];
+    }else{
+      valList.pop();
+    }
+    this.nums.pop();
   }
   return contains;
 };
@@ -56,7 +64,7 @@ RandomizedCollection.prototype.remove = function(val) {
  */
 RandomizedCollection.prototype.getRandom = function() {
   const rand = Math.floor(Math.random() * this.nums.length);
-  return this.nums[rand];  
+  return this.nums[rand][0];  
 };
 
 /** 
@@ -70,28 +78,72 @@ RandomizedCollection.prototype.getRandom = function() {
 const collection = new RandomizedCollection();
 
 // Inserts 1 to the collection. Returns true as the collection did not contain 1.
-console.log(collection.insert(1));//true
-console.log(collection.nums);//[ 1 ]
-console.log(collection.locs);//{ '1': [0] }
-console.log("*****************************");
-// Inserts another 1 to the collection. Returns false as the collection contained 1. Collection now contains [1,1].
-console.log(collection.insert(1));//false
-console.log(collection.nums);//[ 1, 1 ]
-console.log(collection.locs);//{ '1': [0,1] }
-console.log("*****************************");
-// Inserts 2 to the collection, returns true. Collection now contains [1,1,2].
-console.log(collection.insert(2));//true
-console.log(collection.nums);//[ 1, 1, 2 ]
-console.log(collection.locs);//{ '1': [0,1], '2':[2] }
-console.log("*****************************");
-// getRandom should return 1 with the probability 2/3, and returns 2 with the probability 1/3.
-console.log(collection.getRandom());//1 or 2
-console.log("*****************************");
-// Removes 1 from the collection, returns true. Collection now contains [1,2].
-console.log(collection.remove(1));//true
-console.log(collection.nums);//[ 1, 2 ]
-console.log(collection.locs);//{ '1': [0], '2':[1] }
-console.log("*****************************");
-// getRandom should return 1 and 2 both equally likely.
-console.log(collection.getRandom());
+// console.log(collection.insert(1));//true
+// console.log(collection.nums);//[ 1 ]
+// console.log(collection.locs);//{ '1': [0] }
+// console.log("*****************************");
+// // Inserts another 1 to the collection. Returns false as the collection contained 1. Collection now contains [1,1].
+// console.log(collection.insert(1));//false
+// console.log(collection.nums);//[ 1, 1 ]
+// console.log(collection.locs);//{ '1': [0,1] }
+// console.log("*****************************");
+// // Inserts 2 to the collection, returns true. Collection now contains [1,1,2].
+// console.log(collection.insert(2));//true
+// console.log(collection.nums);//[ 1, 1, 2 ]
+// console.log(collection.locs);//{ '1': [0,1], '2':[2] }
+// console.log("*****************************");
+// // getRandom should return 1 with the probability 2/3, and returns 2 with the probability 1/3.
+// console.log(collection.getRandom());//1 or 2
+// console.log("*****************************");
+// // Removes 1 from the collection, returns true. Collection now contains [1,2].
+// console.log(collection.remove(1));//true
+// console.log(collection.nums);//[ 1, 2 ]
+// console.log(collection.locs);//{ '1': [0], '2':[1] }
+// console.log("*****************************");
+// // getRandom should return 1 and 2 both equally likely.
+// console.log(collection.getRandom());
+// console.log("*****************************");
+// console.log(collection.remove(1));//true
+// console.log(collection.nums);//[ 2 ]
+// console.log(collection.locs);//{ 2':[0] }
+// console.log("*****************************");
+// console.log(collection.remove(2));//true
+// console.log(collection.nums);//[ ]
+// console.log(collection.locs);//{ }
+// console.log("*****************************");
+// console.log(collection.insert(1));//true
+// console.log(collection.nums);//[ 1 ]
+// console.log(collection.locs);//{ '1': [0] }
+// console.log("*****************************");
 
+
+// console.log(collection.insert(4));//true
+// console.log(collection.insert(3));//true
+// console.log(collection.insert(4));//false
+// console.log(collection.insert(2));//true
+// console.log(collection.insert(4));//false
+// console.log(collection.nums);//[[ 4, 3, 4, 2, 4 ]
+// console.log(collection.locs);//{ '2': [ 3 ], '3': [ 1 ], '4': [ 0, 2, 4 ] }
+// console.log("*****************************");
+// console.log(collection.remove(4));//true
+// console.log(collection.remove(3));//true
+// console.log(collection.remove(4));//true
+// console.log(collection.nums);//[ 4, 2, 4 ]
+// console.log(collection.locs);//{ '2': [ 1 ], '4': [ 0 ] }
+// console.log(collection.remove(4));//true
+// console.log(collection.nums);//[ 4, 2, 4 ]
+// console.log(collection.locs);//{ '2': [ 1 ], '4': [ 0 ] }
+
+console.log(collection.insert(1));//true
+console.log(collection.insert(1));//false
+console.log(collection.insert(2));//true
+console.log(collection.insert(2));//false
+console.log(collection.insert(2));//false
+console.log(collection.nums);//[ [ 1, 0 ], [ 1, 1 ], [ 2, 0 ], [ 2, 1 ], [ 2, 2 ] ]
+console.log(collection.locs);//{ '1': [ 0, 1 ], '2': [ 2, 3, 4 ] }
+console.log("*****************************");
+console.log(collection.remove(1));//true
+// console.log(collection.remove(1));//true
+// console.log(collection.remove(2));//true
+console.log(collection.nums);//[[ [ 2, 1 ], [ 2, 0 ] ]
+console.log(collection.locs);//{ '2': [ 1, 0 ] }
