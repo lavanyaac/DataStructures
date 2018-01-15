@@ -43,5 +43,58 @@
  * @return {number}
  */
 const minMutation = function(start, end, bank) {
-    
+  if(start === end){ return 0; }
+
+  const charSet = ['A', 'C', 'G', 'T'];
+  let level = 0;
+  const visited = [];
+  const queue = [];
+
+  visited.push(start);
+  queue.push(start);
+
+  while(queue.length){
+  	let counter = queue.length;
+  	while(counter-- > 0){
+  		const curr = queue.shift();
+  		const currArray = curr.split('');
+
+  		for(let i = 0; i < currArray.length; i++){
+  			const old = currArray[i];
+
+  			for(const c of charSet){
+  				currArray[i] = c;
+  				const next = currArray.join('');
+
+  				if(!visited.includes(next) && bank.includes(next)){
+  					if( next === end){
+  						return level+1;
+  					}
+  					visited.push(next);
+  					queue.push(next);
+  				}
+  			}
+
+  			currArray[i] = old;
+  		}
+  	}
+  	++level;
+  }
+  return -1; 
 };
+
+const start = "AACCGGTT";
+const end =   "AACCGGTA";
+const bank = ["AACCGGTA"];
+
+console.log(minMutation(start, end, bank));//1
+
+start1 = "AAAAACCC"
+end1 =   "AACCCCCC"
+bank1 =  ["AAAACCCC", "AAACCCCC", "AACCCCCC"]
+console.log(minMutation(start1, end1, bank1));//3
+
+start1 = "AACCGGTT"
+end1 =   "AAACGGTA"
+bank1 =  ["AACCGGTA", "AACCGCTA", "AAACGGTA"]
+console.log(minMutation(start1, end1, bank1));//2
