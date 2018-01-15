@@ -46,7 +46,7 @@
 const NestedIterator = function(nestedList) {
   this.stack = [];
   for(let i = nestedList.length-1; i>=0; i--){
-  	this.stack.push(nestedList.get(i));
+  	this.stack.push(nestedList[i]);
   }
 };
 
@@ -55,7 +55,7 @@ const NestedIterator = function(nestedList) {
  * @this NestedIterator
  * @returns {boolean}
  */
-NestedIterator.prototype.hasNext = function() {
+NestedIterator.prototype.next = function() {
   return this.stack.pop().getInteger(); 
 };
 
@@ -63,15 +63,15 @@ NestedIterator.prototype.hasNext = function() {
  * @this NestedIterator
  * @returns {integer}
  */
-NestedIterator.prototype.next = function() {
+NestedIterator.prototype.hasNext = function() {
   while(this.stack.length){
   	const curr = this.stack[this.stack.length-1];
   	if(curr.isInteger){
   		return true;
   	}
-  	stack.pop();
+  	this.stack.pop();
   	for(let i = curr.getList().length - 1; i >= 0; i--){
-  		stack.push(cur.getList().get(i));
+  		this.stack.push(cur.getList()[i]);
   	}
   }
   return false;
