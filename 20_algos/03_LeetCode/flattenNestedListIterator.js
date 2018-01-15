@@ -66,12 +66,12 @@ NestedIterator.prototype.next = function() {
 NestedIterator.prototype.hasNext = function() {
   while(this.stack.length){
   	const curr = this.stack[this.stack.length-1];
-  	if(curr.isInteger){
+  	if(curr.isInteger()){
   		return true;
   	}
   	this.stack.pop();
   	for(let i = curr.getList().length - 1; i >= 0; i--){
-  		this.stack.push(cur.getList()[i]);
+  		this.stack.push(curr.getList()[i]);
   	}
   }
   return false;
