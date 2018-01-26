@@ -55,7 +55,6 @@ const alienOrder = function(words) {
   		degree[c] = 0;
   	}
   }
-  console.log(words)
 
   for(let i = 0; i < words.length-1; i++){
   	const curr = words[i];
@@ -76,8 +75,7 @@ const alienOrder = function(words) {
   		}
   	}
   }
-  console.log('map###########',map);
-  console.log('degree ******',degree);
+
   const q = [];
   for(const c in degree){
   	if(degree[c] === 0){
