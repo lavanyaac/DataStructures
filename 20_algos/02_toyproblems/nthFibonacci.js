@@ -21,6 +21,7 @@
  *
  */
 const nthfibonacciRecursive = (n) => {
+	// console.log('callled with: ', n)
  	if(n === 0){
  		return 0;
  	}
@@ -31,6 +32,23 @@ const nthfibonacciRecursive = (n) => {
 }
 
 console.log(nthfibonacciRecursive(6));
+
+const nthfibonacciRecursiveWithMemoize = (n, memo={}) => {
+ 	if(n === 0){
+ 		memo[0] = 0;
+ 		return memo[0];
+ 	}
+ 	if(n === 1){
+ 		memo[1] = 1;
+ 		return memo[1];
+ 	}
+ 	const a = memo[n-1]? memo[n-1]:nthfibonacciRecursiveWithMemoize(n-1, memo);
+ 	const b = memo[n-2]? memo[n-2]:nthfibonacciRecursiveWithMemoize(n-2, memo);
+
+ 	memo[n] = a+b;
+ 	return memo[n] ;
+}
+console.log(nthfibonacciRecursiveWithMemoize(7));
 
 const nthfibonacciIterative = (n) => {
 	const results = [0, 1];
