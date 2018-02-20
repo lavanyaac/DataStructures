@@ -31,6 +31,7 @@ const palindromicSubstrings = function(s){
 	}
 
 	function extendPalindrome(s, i, j){
+
 		while(i>=0 && j<s.length && s[i] === s[j]){
 			--i;
 			++j;
@@ -39,5 +40,5 @@ const palindromicSubstrings = function(s){
 	}
 }
 
-console.log(palindromicSubstrings('abc'));
-console.log(palindromicSubstrings('aaa'));
+console.log(palindromicSubstrings('abc'));//3
+console.log(palindromicSubstrings('aaa'));//6
